@@ -39,20 +39,20 @@ public class UpdateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())){
             EntityManager em = DBUtil.createEntityManager();
 
-            Task m = em.find(Task.class, (Integer)(request.getSession().getAttribute("task_id")));
+            Task t = em.find(Task.class, (Integer)(request.getSession().getAttribute("task_id")));
 
             String content = request.getParameter("content");
-            m.setContent(content);
+            t.setContent(content);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            m.setUpdated_at(currentTime);
+            t.setUpdated_at(currentTime);
 
-            List<String> errors = TaskValidator.validate(m);
+            List<String> errors = TaskValidator.validate(t);
             if(errors.size() > 0){
                 em.close();
 
                 request.setAttribute("_tken", request.getSession().getId());
-                request.setAttribute("task", m);
+                request.setAttribute("task", t);
                 request.setAttribute("errors", errors);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");

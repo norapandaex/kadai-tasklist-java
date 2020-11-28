@@ -6,10 +6,10 @@ import java.util.List;
 import models.Task;
 
 public class TaskValidator {
-    public static List<String> validate(Task m) {
+    public static List<String> validate(Task t) {
         List<String> errors = new ArrayList<String>();
 
-        String content_error = _validateContent(m.getContent());
+        String content_error = _validateContent(t.getContent());
         if(!content_error.equals("")) {
             errors.add(content_error);
         }
